@@ -1,4 +1,3 @@
-from typing import ItemsView
 from sqlalchemy import String, Float, Integer, Column
 from db import base
 
