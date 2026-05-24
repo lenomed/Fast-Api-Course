@@ -32,4 +32,4 @@ async def upload(request: Request, file: UploadFile = File(...)):
         'image_url': f"/static/uploads/{file.filename}"
     }
 
-    return templates.TemplateResponse("result_img.html", {"request": request, "file_info": file_info})  
+    return templates.TemplateResponse("result_img.html", {"request": request, "file_info": file_info})
