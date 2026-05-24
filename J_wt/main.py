@@ -53,3 +53,18 @@ def login(user: UserCreate, db: Session = Depends(get_db)):
         'user': db_user.username,
         'password': db_user.hashed_password
     }
+
+# building protected route using jwt token
+from typing import Optional
+from fastapi import Header, HTTPException, status
+
+@app.get('/protected')
+def protected_route(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    if not credentials:
+        raise HTTPException(status_code= status.HTTP_403_FORBIDDEN, detail='missing credential')
+    token = credentials.credentials
+    payload = decode_access_token(token)
+    if not payload:
+        raise HTTPException(status_code= status.HTTP_403_FORBIDDEN, detail='invalid or expired token')
+    return {'message': 'protected route accessed', 'user': payload['sub']}
+ 
